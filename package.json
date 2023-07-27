@@ -1,0 +1,15 @@
+{
+  "name": "strapi-plugin-search",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "strapi": "strapi"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@strapi/strapi": "^4.11.7"
+  }
+}
