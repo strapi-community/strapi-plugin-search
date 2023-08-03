@@ -1,0 +1,3 @@
+# Strapi-Plugin-Search
+
+Coming soon...
