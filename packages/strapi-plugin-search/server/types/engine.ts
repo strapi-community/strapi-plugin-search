@@ -39,6 +39,7 @@ export interface EngineCreateResponse {
 
 export abstract class Engine {
   abstract validateIndexName({ name }: EngineValidateIndexNameParams): boolean;
+
   abstract validateDocumentKey({key}: EngineValidateDocumentKeyParams): boolean;
   abstract create({index,data}: EngineCreateParams): EngineCreateResponse | Promise<EngineCreateResponse>;
   abstract update({index,key,data}: EngineUpdateParams): void | Promise<void>;
@@ -48,6 +49,7 @@ export abstract class Engine {
     | IterableIterator<Promise<EngineCreateResponse[]>>;
   abstract updateMany({index,data}: EngineUpdateManyParams): void | Promise<void>;
   abstract deleteMany({index,keys}: EngineDeleteManyParams): void | Promise<void>;
+
 }
 
 export interface EngineConfig {

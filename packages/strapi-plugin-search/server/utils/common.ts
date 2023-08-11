@@ -18,6 +18,7 @@ export function getService<T>({
 	strapi,
 	name,
 	plugin = "search",
+
 }: {
   strapi: Strapi;
   type?: string;

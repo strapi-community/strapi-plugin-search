@@ -3,6 +3,7 @@ import type { EngineManagerService, EngineService } from "../types";
 import { getConfig, getService, isEmptyObject } from "../utils";
 
 export default ({ strapi }: { strapi: Strapi }): EngineService => ({
+
 	async create({ uid, engine, index, data }) {
 		const documentIdField = getConfig<string>({
 			strapi,

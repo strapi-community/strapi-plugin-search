@@ -1,9 +1,11 @@
 import path from "node:path";
+
 import type { EngineConfig, EngineManagerService } from "../types";
 import { Engine } from "../types";
 import { getConfig } from "../utils";
 
 class EngineManager implements EngineManagerService {
+
 	private engines = new Map<string, Engine>();
 
 	/**
@@ -12,6 +14,7 @@ class EngineManager implements EngineManagerService {
    * @param name The engine name
    * @param options The engine options
    */
+
 	async register(config: EngineConfig) {
 		let enginePath = config.resolve || `strapi-plugin-search-${config.name}`;
 		try {
@@ -46,6 +49,7 @@ class EngineManager implements EngineManagerService {
    * @param name The engine name
    * @returns The requested engine
    */
+
 	get(name: string) {
 		const engine = this.engines.get(name);
 
@@ -59,6 +63,7 @@ class EngineManager implements EngineManagerService {
    *
    * @returns All registered engines as a key value pair
    */
+
 	getAll(): [string, Engine][] {
 		return Array.from(this.engines.entries());
 	}
@@ -74,3 +79,4 @@ class EngineManager implements EngineManagerService {
 
 export default (): EngineManagerService =>
 	new EngineManager();
+

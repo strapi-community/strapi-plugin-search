@@ -1,13 +1,16 @@
 import type { Strapi } from "@strapi/strapi";
 import type {
+
 	DataService,
 	DataServiceSanitizeByFieldsParams,
 	DataServiceSanitizeFieldParams,
 	DataServiceSanitizeParams,
+
 } from "../types";
 import { resolveValue } from "../utils";
 
 export default ({ strapi }: { strapi: Strapi }): DataService => ({
+
 	async sanitize({ index, data = {} }: DataServiceSanitizeParams) {
 		const globalFields = strapi.config.get("plugin.search.global.fields");
 		if (index.fields) return sanitizeByFields({ data, fields: index.fields });

@@ -1,6 +1,7 @@
 import type { Strapi } from "@strapi/strapi";
 import { getConfig, getService, resolveValue } from "../utils";
 import type {
+
 	BuilderService,
 	BuilderServiceDataParams,
 	BuilderServiceIndexParams,

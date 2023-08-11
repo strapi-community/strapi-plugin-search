@@ -179,6 +179,7 @@ export async function bootstrapLifecyles({ strapi }: { strapi: Strapi }) {
 
 interface EventQuery {
   filters?: unknown;
+
   limit?: number;
   fields?: string[];
 }
@@ -202,4 +203,5 @@ export function buildEventQuery({ event }) {
 	}
 
 	return query;
+
 }
