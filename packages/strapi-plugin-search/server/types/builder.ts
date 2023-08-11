@@ -17,10 +17,7 @@ export interface BuilderServiceDataParams {
 export interface BuilderService {
   index({ index, value }: BuilderServiceIndexParams): string | Promise<string>;
   key({ value }: BuilderServiceKeyParams): string;
-  data({
-    index,
-    value,
-  }: BuilderServiceIndexParams): Promise<
+  data({ index, value }: BuilderServiceIndexParams): Promise<
     Record<string, unknown> | Record<string, unknown>[]
   >;
 }

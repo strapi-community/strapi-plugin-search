@@ -2,10 +2,7 @@ import type { ContentTypeIndex } from "./content-type";
 import type { Field } from "./field";
 
 export interface DataService {
-  sanitize({
-    index,
-    data,
-  }: DataServiceSanitizeParams): Promise<Record<string, unknown>>;
+  sanitize({index,data}: DataServiceSanitizeParams): Promise<Record<string, unknown>>;
 }
 
 export interface DataServiceSanitizeParams {
