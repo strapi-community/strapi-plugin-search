@@ -47,7 +47,8 @@
   "scripts": {
     "develop": "tsc -p tsconfig.server.json -w",
     "build": "tsc -p tsconfig.server.json",
-    "lint": "eslint --ext .ts,.tsx . --fix"
+    "lint:fix": "eslint --fix \"./**/*.{ts,js,tsx}\"",
+    "format": "prettier --write \"./**/*.{ts,js,tsx}\""
   },
   "license": "MIT"
 }
