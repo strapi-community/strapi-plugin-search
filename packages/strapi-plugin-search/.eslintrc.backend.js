@@ -1,9 +1,10 @@
 module.exports = {
 	$schema: "https://json.schemastore.org/eslintrc",
-	env: {
-		node: true,
-	},
-	globals: {
-		strapi: "readonly",
-	},
+	extends: [
+		"eslint:recommended",
+		"plugin:react/recommended",
+		"plugin:@typescript-eslint/recommended",
+		"@strapi-community",
+		"prettier",
+	],
 };
