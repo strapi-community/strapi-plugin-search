@@ -7,6 +7,10 @@ module.exports = {
 		sourceType: "module",
 		project: ["*/tsconfig.json"],
 	},
+	rules: {
+		"no-unused-vars": "off",
+		"@typescript-eslint/no-unused-vars": "error",
+	},
 	plugins: ["@typescript-eslint"],
 	overrides: [
 		{
