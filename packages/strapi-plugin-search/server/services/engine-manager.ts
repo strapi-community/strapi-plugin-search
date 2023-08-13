@@ -5,15 +5,14 @@ import { Engine } from "../types";
 import { getConfig } from "../utils";
 
 class EngineManager implements EngineManagerService {
-
 	private engines = new Map<string, Engine>();
 
 	/**
-   * Register an engine
-   *
-   * @param name The engine name
-   * @param options The engine options
-   */
+	 * Register an engine
+	 *
+	 * @param name The engine name
+	 * @param options The engine options
+	 */
 
 	async register(config: EngineConfig) {
 		let enginePath = config.resolve || `strapi-plugin-search-${config.name}`;
@@ -24,31 +23,25 @@ class EngineManager implements EngineManagerService {
 		}
 		const EngineProvider = (await import(enginePath)).default;
 		if (!EngineProvider) {
-			throw new Error(
-				`Engine ${config.name} at "${enginePath}" has no export.`
-			);
+			throw new Error(`Engine ${config.name} at "${enginePath}" has no export.`);
 		}
 
-		if (!(EngineProvider.prototype instanceof Engine))
-			throw new Error(`Engine ${config.name} does not extend Engine`);
+		if (!(EngineProvider.prototype instanceof Engine)) throw new Error(`Engine ${config.name} does not extend Engine`);
 
 		const documentIdField = getConfig<string>({
 			strapi,
 			path: "global.documentIdField",
 		});
 
-		this.engines.set(
-			config.name,
-			new EngineProvider({ config, documentIdField })
-		);
+		this.engines.set(config.name, new EngineProvider({ config, documentIdField }));
 	}
 
 	/**
-   * Retrieve an engine
-   *
-   * @param name The engine name
-   * @returns The requested engine
-   */
+	 * Retrieve an engine
+	 *
+	 * @param name The engine name
+	 * @returns The requested engine
+	 */
 
 	get(name: string) {
 		const engine = this.engines.get(name);
@@ -59,24 +52,22 @@ class EngineManager implements EngineManagerService {
 	}
 
 	/**
-   * Retrieve the primary engine
-   *
-   * @returns All registered engines as a key value pair
-   */
+	 * Retrieve the primary engine
+	 *
+	 * @returns All registered engines as a key value pair
+	 */
 
 	getAll(): [string, Engine][] {
 		return Array.from(this.engines.entries());
 	}
 
 	/**
-   * Retrieve the number of registered engines
-   *
-   */
+	 * Retrieve the number of registered engines
+	 *
+	 */
 	size(): number {
 		return this.engines.size;
 	}
 }
 
-export default (): EngineManagerService =>
-	new EngineManager();
-
+export default (): EngineManagerService => new EngineManager();

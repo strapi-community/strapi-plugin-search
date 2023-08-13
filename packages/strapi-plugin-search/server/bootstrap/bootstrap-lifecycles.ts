@@ -15,9 +15,7 @@ export async function bootstrapLifecyles({ strapi }: { strapi: Strapi }) {
 		defaultValue: [],
 	}).forEach((contentType) => {
 		if (!contentType.enabled) {
-			strapi.log.warn(
-				`Skipping lifecycles for ${contentType.uid} as it is disabled`
-			);
+			strapi.log.warn(`Skipping lifecycles for ${contentType.uid} as it is disabled`);
 			return;
 		}
 
@@ -92,10 +90,7 @@ export async function bootstrapLifecyles({ strapi }: { strapi: Strapi }) {
 				async afterCreateMany(event) {
 					const query = buildEventQuery({ event });
 					if (query.filters) {
-						const records = await strapi.entityService.findMany(
-							contentType.uid,
-							query
-						);
+						const records = await strapi.entityService.findMany(contentType.uid, query);
 
 						getService<EngineService>({
 							strapi,
@@ -120,10 +115,7 @@ export async function bootstrapLifecyles({ strapi }: { strapi: Strapi }) {
 				async beforeUpdateMany(event) {
 					const query = buildEventQuery({ event });
 					if (query.filters) {
-						const records = await strapi.entityService.findMany(
-							contentType.uid,
-							query
-						);
+						const records = await strapi.entityService.findMany(contentType.uid, query);
 
 						event.state.search.records = records;
 					}
@@ -150,13 +142,8 @@ export async function bootstrapLifecyles({ strapi }: { strapi: Strapi }) {
 				async beforeDeleteMany(event) {
 					const query = buildEventQuery({ event });
 					if (query.filters) {
-						const records = await strapi.entityService.findMany(
-							contentType.uid,
-							query
-						);
-						event.state.search.documentIds = records?.map(
-							(r) => r[documentIdField]
-						);
+						const records = await strapi.entityService.findMany(contentType.uid, query);
+						event.state.search.documentIds = records?.map((r) => r[documentIdField]);
 					}
 				},
 				async afterDeleteMany(event) {
@@ -178,10 +165,10 @@ export async function bootstrapLifecyles({ strapi }: { strapi: Strapi }) {
 }
 
 interface EventQuery {
-  filters?: unknown;
+	filters?: unknown;
 
-  limit?: number;
-  fields?: string[];
+	limit?: number;
+	fields?: string[];
 }
 
 export function buildEventQuery({ event }) {
@@ -203,5 +190,4 @@ export function buildEventQuery({ event }) {
 	}
 
 	return query;
-
 }

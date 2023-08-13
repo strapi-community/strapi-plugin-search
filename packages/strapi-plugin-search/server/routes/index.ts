@@ -1,5 +1,4 @@
 export default [
-
 	{
 		method: "GET",
 		path: "/",
@@ -9,4 +8,3 @@ export default [
 		},
 	},
 ];
-

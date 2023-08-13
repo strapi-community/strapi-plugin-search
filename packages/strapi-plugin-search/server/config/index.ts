@@ -1,5 +1,4 @@
 export default {
-
 	default() {
 		return {
 			global: {

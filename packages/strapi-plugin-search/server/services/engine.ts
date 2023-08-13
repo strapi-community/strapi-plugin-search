@@ -3,7 +3,6 @@ import type { EngineManagerService, EngineService } from "../types";
 import { getConfig, getService, isEmptyObject } from "../utils";
 
 export default ({ strapi }: { strapi: Strapi }): EngineService => ({
-
 	async create({ uid, engine, index, data }) {
 		const documentIdField = getConfig<string>({
 			strapi,
@@ -31,21 +30,17 @@ export default ({ strapi }: { strapi: Strapi }): EngineService => ({
 	update({ engine, index, key, data }) {
 		if (isEmptyObject(data)) return;
 
-		getService<EngineManagerService>({ strapi, name: "engineManager" })
-			.get(engine)
-			.update({
-				index,
-				key,
-				data,
-			});
+		getService<EngineManagerService>({ strapi, name: "engineManager" }).get(engine).update({
+			index,
+			key,
+			data,
+		});
 	},
 	delete({ engine, index, key }) {
-		getService<EngineManagerService>({ strapi, name: "engineManager" })
-			.get(engine)
-			.delete({
-				index,
-				key,
-			});
+		getService<EngineManagerService>({ strapi, name: "engineManager" }).get(engine).delete({
+			index,
+			key,
+		});
 	},
 	async createMany({ uid, engine, index, data }) {
 		const documentIdField = getConfig<string>({
@@ -82,19 +77,15 @@ export default ({ strapi }: { strapi: Strapi }): EngineService => ({
 
 		if (!records.length) return;
 
-		getService<EngineManagerService>({ strapi, name: "engineManager" })
-			.get(engine)
-			.updateMany({
-				index,
-				data: records,
-			});
+		getService<EngineManagerService>({ strapi, name: "engineManager" }).get(engine).updateMany({
+			index,
+			data: records,
+		});
 	},
 	deleteMany({ engine, index, keys }) {
-		getService<EngineManagerService>({ strapi, name: "engineManager" })
-			.get(engine)
-			.deleteMany({
-				index,
-				keys,
-			});
+		getService<EngineManagerService>({ strapi, name: "engineManager" }).get(engine).deleteMany({
+			index,
+			keys,
+		});
 	},
 });

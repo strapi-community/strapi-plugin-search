@@ -8,10 +8,8 @@ import { useEffect, useRef } from "react";
 import pluginId from "../../pluginId";
 
 type InitializerProps = {
-  setPlugin: (id: string) => void;
+	setPlugin: (id: string) => void;
 };
-
-
 
 const Initializer = ({ setPlugin }: InitializerProps) => {
 	const ref = useRef(setPlugin);

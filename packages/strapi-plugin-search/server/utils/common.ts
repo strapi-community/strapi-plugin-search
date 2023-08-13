@@ -1,14 +1,11 @@
 import type { Strapi } from "@strapi/strapi";
 
 export interface resolveValueParams<T> {
-  value: T | ((args?: unknown) => T | Promise<T>) | ((args: unknown) => T | Promise<T>);
-  args?: unknown;
+	value: T | ((args?: unknown) => T | Promise<T>) | ((args: unknown) => T | Promise<T>);
+	args?: unknown;
 }
 
-export async function resolveValue<T>({
-	value,
-	args,
-}: resolveValueParams<T>): Promise<T> {
+export async function resolveValue<T>({ value, args }: resolveValueParams<T>): Promise<T> {
 	if (value instanceof Function) return value(args);
 
 	return value;
@@ -18,12 +15,11 @@ export function getService<T>({
 	strapi,
 	name,
 	plugin = "search",
-
 }: {
-  strapi: Strapi;
-  type?: string;
-  name: string;
-  plugin?: string;
+	strapi: Strapi;
+	type?: string;
+	name: string;
+	plugin?: string;
 }): T {
 	return strapi.plugin(plugin).service(name);
 }
@@ -33,9 +29,9 @@ export function getConfig<T>({
 	path = "",
 	defaultValue,
 }: {
-  strapi: Strapi;
-  path?: string;
-  defaultValue?: unknown;
+	strapi: Strapi;
+	path?: string;
+	defaultValue?: unknown;
 }): T {
 	if (path.length) path = `.${path}`;
 

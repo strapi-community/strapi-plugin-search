@@ -1,13 +1,5 @@
 import React from "react";
-import {
-	Tabs,
-	Tab,
-	TabGroup,
-	TabPanels,
-	TabPanel,
-	Box,
-	HeaderLayout,
-} from "@strapi/design-system";
+import { Tabs, Tab, TabGroup, TabPanels, TabPanel, Box, HeaderLayout } from "@strapi/design-system";
 import CTOverview from "../../components/ContentTypeOverview";
 import IndexOverview from "../../components/IndexOverview";
 import EngineOverview from "../../components/EngineOverview";
@@ -15,21 +7,14 @@ import EngineOverview from "../../components/EngineOverview";
 const Overview = () => {
 	return (
 		<>
-			<HeaderLayout
-				title="Search Overview"
-				subtitle="Overview of searchable items"
-				as="h1"
-			/>
+			<HeaderLayout title="Search Overview" subtitle="Overview of searchable items" as="h1" />
 			<Box
 				style={{
 					padding: "0 3rem",
 				}}
 				background="primary100"
 			>
-				<TabGroup
-					label="Some stuff for the label"
-					id="tabs"
-				>
+				<TabGroup label="Some stuff for the label" id="tabs">
 					<Tabs>
 						<Tab>Content Type</Tab>
 						<Tab>Index</Tab>

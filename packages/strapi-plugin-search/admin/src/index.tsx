@@ -7,11 +7,11 @@ import getTrad from "./utils/getTrad";
 
 const name = pluginPkg.strapi.name;
 
-
 interface App {
 	registerPlugin: (plugin: Plugin) => void;
 	createSettingSection: (
 		settingsTitle: SettingsTitle,
+
 		settingsLinks: SettingsLink[]
 	) => void;
 	locales: string[];
@@ -44,7 +44,6 @@ interface Plugin {
 }
 
 export default {
-	
 	register(app: App) {
 		const plugin = {
 			id: pluginId,
@@ -76,8 +75,6 @@ export default {
 			]
 		);
 	},
-
-	bootstrap() {},
 
 	async registerTrads(app: App) {
 		const { locales } = app;

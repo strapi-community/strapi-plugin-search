@@ -16,10 +16,7 @@ export default ({ strapi }: { strapi: Strapi }) => {
 	});
 
 	for (const indexedCT of indexedContentTypes) {
-		if (
-			strapi.contentTypes[indexedCT.uid] &&
-      !strapi.contentTypes[indexedCT.uid].attributes[documentIdField]
-		) {
+		if (strapi.contentTypes[indexedCT.uid] && !strapi.contentTypes[indexedCT.uid].attributes[documentIdField]) {
 			strapi.log.info(`injected ${documentIdField} into ${indexedCT.uid}`);
 			strapi.contentTypes[indexedCT.uid].attributes[documentIdField] = {
 				type: "string",
