@@ -8,16 +8,15 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 import { AnErrorOccurred } from "@strapi/helper-plugin";
-import pluginId from "../../pluginId";
 
 const App = () => {
-  return (
-    <div>
-      <Switch>
-        <Route component={AnErrorOccurred} />
-      </Switch>
-    </div>
-  );
+	return (
+		<div>
+			<Switch>
+				<Route component={AnErrorOccurred} />
+			</Switch>
+		</div>
+	);
 };
 
 export default App;

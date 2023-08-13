@@ -3,12 +3,12 @@ import type { EngineConfig, Index } from "./engine";
 import type { Field } from "./field";
 
 export interface PluginConfig {
-  global: {
-    index?: Index;
-    engine?: string;
-    fields?: Array<string | Field>;
-    documentIdField?: string;
-  };
-  engines: EngineConfig[];
-  contentTypes?: ContentType[];
+	global: {
+		index?: Index;
+		engine?: string;
+		fields?: Array<string | Field>;
+		documentIdField?: string;
+	};
+	engines: EngineConfig[];
+	contentTypes?: ContentType[];
 }

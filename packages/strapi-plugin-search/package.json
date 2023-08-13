@@ -21,15 +21,16 @@
     "@types/styled-components": "^5.1.26",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^5.3.4",
-    "styled-components": "^5.3.6",
-    "typescript": "5.0.4"
+    "react-router-dom": "^6.15.0",
+    "styled-components": "^6.0.7",
+    "typescript": "^5.1.6"
   },
   "peerDependencies": {
-    "react": "^17.0.0 || ^18.0.0",
-    "react-dom": "^17.0.0 || ^18.0.0",
-    "react-router-dom": "^5.3.4",
-    "styled-components": "^5.3.6"
+    "@strapi/strapi": "^4.12.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.15.0",
+    "styled-components": "^6.0.7"
   },
   "author": {
     "name": "A Strapi developer"
@@ -45,7 +46,9 @@
   },
   "scripts": {
     "develop": "tsc -p tsconfig.server.json -w",
-    "build": "tsc -p tsconfig.server.json"
+    "build": "tsc -p tsconfig.server.json",
+    "lint:fix": "eslint --fix \"./**/*.{ts,js,tsx}\"",
+    "format": "prettier --write \"./**/*.{ts,js,tsx}\""
   },
   "license": "MIT"
 }

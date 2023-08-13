@@ -6,8 +6,18 @@
     "packages/providers/*",
     "examples/*"
   ],
+  "scripts": {
+    "lint:fix": "lerna run lint:fix",
+    "format": "lerna run format"
+  },
   "dependencies": {},
   "devDependencies": {
-    "lerna": "^7.1.4"
+    "@strapi-community/eslint-config": "^0.4.3",
+    "@typescript-eslint/eslint-plugin": "^6.3.0",
+    "@typescript-eslint/parser": "^6.3.0",
+    "eslint": "^8.47.0",
+    "eslint-config-prettier": "^9.0.0",
+    "lerna": "^7.1.4",
+    "prettier": "^3.0.1"
   }
 }
