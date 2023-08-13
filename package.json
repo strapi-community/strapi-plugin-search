@@ -11,6 +11,8 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "@babel/preset-react": "^7.22.5",
+    "@babel/preset-typescript": "^7.22.5",
     "@strapi-community/eslint-config": "^0.4.3",
     "@typescript-eslint/eslint-plugin": "^6.3.0",
     "@typescript-eslint/parser": "^6.3.0",
