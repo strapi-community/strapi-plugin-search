@@ -1,11 +1,11 @@
-import engineManager from "./engine-manager";
-import engine from "./engine";
 import builder from "./builder";
 import data from "./data";
+import engine from "./engine";
+import engineManager from "./engine-manager";
 
 export default {
-	engineManager,
-	engine,
 	builder,
 	data,
+	engine,
+	"engine-manager": engineManager,
 };

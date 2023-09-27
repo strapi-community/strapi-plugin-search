@@ -1,22 +1,26 @@
-import type { ContentTypeIndex } from "./content-type";
-
-export interface BuilderServiceIndexParams {
-	index: ContentTypeIndex;
-	value: Record<string, unknown> | Record<string, unknown>[];
-}
-
-export interface BuilderServiceKeyParams {
-	value: Record<string, unknown>;
-}
-
-export interface BuilderServiceDataParams {
-	index: ContentTypeIndex;
-	value: Record<string, unknown>;
-}
+import { ContentType, ContentTypeIndex } from "./content-type";
+import { EngineData, EngineKey } from "./engine";
 
 export interface BuilderService {
-	index({ index, value }: BuilderServiceIndexParams): string | Promise<string>;
-	key({ value }: BuilderServiceKeyParams): string;
+	index({ index }: { index: ContentTypeIndex }): string;
+	key({ ct, index, record }: { ct: ContentType; index: ContentTypeIndex; record: EngineData }): {
+		field: string;
+		value: EngineKey;
+	};
+	data({
+		ct,
+		index,
+		value,
+	}: {
+		ct: ContentType;
+		index: ContentTypeIndex;
+		value: EngineData;
+	}): EngineData | EngineData[];
+	query({ ct, event }: { ct: ContentType; event: any }): Promise<DBQuery>;
+}
 
-	data({ index, value }: BuilderServiceIndexParams): Promise<Record<string, unknown> | Record<string, unknown>[]>;
+export interface DBQuery {
+	populate?: any;
+	where?: any;
+	select?: any;
 }

@@ -1,58 +1,64 @@
-import type { Strapi } from "@strapi/strapi";
-import type {
-	DataService,
-	DataServiceSanitizeByFieldsParams,
-	DataServiceSanitizeFieldParams,
-	DataServiceSanitizeParams,
-} from "../types";
-import { resolveValue } from "../utils";
+import { Strapi } from "@strapi/strapi";
+import { getConfig, resolveValue } from "../utils";
+import { DataService, EngineData, Field, ProcessedField } from "../types";
 
-export default ({ strapi }: { strapi: Strapi }): DataService => ({
-	async sanitize({ index, data = {} }: DataServiceSanitizeParams) {
-		const globalFields = strapi.config.get("plugin.search.global.fields");
-		if (index.fields) return sanitizeByFields({ data, fields: index.fields });
+export default ({ strapi }: { strapi: Strapi }): DataService => {
+	const defaultFields = getConfig<Field[]>({ strapi, path: "global.fields" });
 
-		if (globalFields) return sanitizeByFields({ data, fields: globalFields });
+	async function sanitize({ index, data }) {
+		const fields = index.fields || defaultFields;
+		const obj: EngineData = {};
 
-		return {};
-	},
-});
+		if (!fields) {
+			return data;
+		}
 
-async function sanitizeByFields({ data, fields }: DataServiceSanitizeByFieldsParams) {
-	const obj = {};
-	for (const field of fields) {
-		const base = await sanitizeField({ field, data });
-		if (base.fieldValue) obj[base.fieldName] = base.fieldValue;
+		for (const field of fields) {
+			const base = await this.sanitizeField({ field, data });
+			if (base.value) {
+				obj[base.field] = base.value;
+			}
+		}
+		return obj;
 	}
-	return obj;
-}
 
-async function sanitizeField({ field, data }: DataServiceSanitizeFieldParams) {
-	const isComplex = typeof field !== "string";
-	const fieldName = isComplex ? field.name : field;
-	const base: { fieldName: string; fieldValue?: unknown } = {
-		fieldName,
-	};
+	async function sanitizeField({ field, data }) {
+		const isComplex = typeof field === "object";
+		const fieldName = isComplex ? field.name : field;
+		const hasField = fieldName in data;
+		const base: ProcessedField = {
+			field: fieldName,
+		};
 
-	if (!(fieldName in data) && !isComplex) return base;
+		if (!hasField && !isComplex) {
+			return base;
+		}
 
-	if (!isComplex) {
-		base.fieldValue = data[fieldName];
+		base.value = data[base.field];
+		if (!isComplex) {
+			return base;
+		}
+
+		if (!field.custom && !hasField) {
+			return base;
+		}
+
+		if (field.alias) {
+			base.field = field.alias;
+		}
+
+		if (field.value) {
+			base.value = await resolveValue({
+				value: field.value,
+				args: { record: data },
+			});
+		}
+
 		return base;
 	}
 
-	if (!field.include) return base;
-
-	if (!field.custom && !(fieldName in data)) return base;
-
-	if (field.alias) base.fieldName = field.alias;
-
-	if (field.value) {
-		base.fieldValue = await resolveValue({
-			value: field.value,
-			args: { record: data },
-		});
-	}
-
-	return base;
-}
+	return {
+		sanitize,
+		sanitizeField,
+	};
+};

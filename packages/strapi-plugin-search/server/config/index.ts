@@ -1,9 +1,7 @@
 export default {
 	default() {
 		return {
-			global: {
-				documentIdField: "documentId",
-			},
+			global: {},
 			engines: [],
 			contentTypes: [],
 		};
