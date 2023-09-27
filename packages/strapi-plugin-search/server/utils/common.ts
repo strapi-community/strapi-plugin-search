@@ -1,47 +1,49 @@
-import type { Strapi } from "@strapi/strapi";
+import {
+	GetConfigParams,
+	GetEngineParams,
+	GetServiceParams,
+	PossiblePromise,
+	Services,
+	resolveValueParams,
+} from "../types";
 
-export interface resolveValueParams<T> {
-	value: T | ((args?: unknown) => T | Promise<T>) | ((args: unknown) => T | Promise<T>);
-	args?: unknown;
-}
-
-export async function resolveValue<T>({ value, args }: resolveValueParams<T>): Promise<T> {
-	if (value instanceof Function) return value(args);
-
-	return value;
-}
-
-export function getService<T>({
+export function getService<Service extends keyof Services>({
 	strapi,
 	name,
 	plugin = "search",
-}: {
-	strapi: Strapi;
-	type?: string;
-	name: string;
-	plugin?: string;
-}): T {
-	return strapi.plugin(plugin).service(name);
+}: GetServiceParams<Service>) {
+	const service = strapi.service<ReturnType<Services[Service]>>(`plugin::${plugin}.${name}`);
+	return service as Exclude<typeof service, undefined>;
 }
 
-export function getConfig<T>({
-	strapi,
-	path = "",
-	defaultValue,
-}: {
-	strapi: Strapi;
-	path?: string;
-	defaultValue?: unknown;
-}): T {
-	if (path.length) path = `.${path}`;
+export function getConfig<T>({ strapi, path = "", defaultValue }: GetConfigParams): T {
+	if (path.length) {
+		path = `.${path}`;
+	}
 
 	return strapi.config.get(`plugin.search${path}`, defaultValue);
 }
 
-export function isEmptyObject(obj: Record<string, unknown>) {
+export function resolveValue<T>({ value, args }: resolveValueParams<T>): PossiblePromise<T> {
+	if (value instanceof Function) {
+		return value(args);
+	}
+
+	return value;
+}
+
+export function isEmptyObject(obj: Record<string, any>) {
 	for (const prop in obj) {
-		if (Object.prototype.hasOwnProperty.call(obj, prop)) return false;
+		if (Object.prototype.hasOwnProperty.call(obj, prop)) {
+			return false;
+		}
 	}
 
 	return true;
+}
+
+export function getEngine({ strapi, engine }: GetEngineParams): string {
+	const defaultEngine = getConfig<string>({ strapi, path: "global.index.engine" });
+
+	return engine || defaultEngine;
 }

@@ -6,8 +6,7 @@ export interface PluginConfig {
 	global: {
 		index?: Index;
 		engine?: string;
-		fields?: Array<string | Field>;
-		documentIdField?: string;
+		fields?: Field[];
 	};
 	engines: EngineConfig[];
 	contentTypes?: ContentType[];

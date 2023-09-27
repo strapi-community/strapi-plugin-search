@@ -1,7 +1,10 @@
-export interface Field<T = unknown> {
+import { PossibleFunction, PossiblePromise } from "./shared";
+
+export interface ComplexField<T = unknown> {
 	name: string;
-	include?: boolean;
 	alias?: string;
 	custom?: boolean;
-	value?: T | (({ record }) => T | Promise<T>);
+	value?: PossibleFunction<PossiblePromise<T>>;
 }
+
+export type Field = string | ComplexField;

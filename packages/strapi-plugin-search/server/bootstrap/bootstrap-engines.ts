@@ -1,24 +1,24 @@
 import type { Strapi } from "@strapi/strapi";
-import type { EngineConfig, EngineManagerService } from "../types";
 import { getConfig, getService } from "../utils";
+import { EngineConfig } from "../types";
 
 export async function bootstrapEngines({ strapi }: { strapi: Strapi }) {
-	const engines = getConfig<EngineConfig[]>({
-		strapi,
-		path: "engines",
-		defaultValue: [],
-	});
+	const engines = getConfig<EngineConfig[]>({ strapi, path: "engines", defaultValue: [] });
 
-	if (!engines.length) throw new Error("At least one engine must be specified");
+	if (!engines.length) {
+		throw new Error("At least one engine must be specified");
+	}
 
-	await Promise.allSettled(
-		engines
-			.filter((engine) => engine.enabled)
-			.map((engine) => {
-				return getService<EngineManagerService>({
-					strapi,
-					name: "engineManager",
-				}).register(engine);
-			})
-	);
+	for (const engine of engines) {
+		if (!engine.enabled) {
+			strapi.log.info(`[search] ${engine.name} was not registered as it is disabled`);
+			continue;
+		}
+
+		try {
+			await getService({ strapi, name: "engine-manager" }).register(engine);
+		} catch (error: any) {
+			strapi.log.info(`[search] ${engine.name} was not registered due to the following error ${error.message}`);
+		}
+	}
 }

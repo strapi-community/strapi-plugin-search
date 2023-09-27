@@ -9,5 +9,5 @@ export interface ContentType {
 
 export interface ContentTypeIndex extends Index {
 	engine?: string;
-	fields?: Array<string | Field>;
+	fields?: Field[];
 }

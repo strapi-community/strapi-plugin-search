@@ -1,21 +1,14 @@
+import { Strapi } from "@strapi/strapi";
 import path from "node:path";
-
-import type { EngineConfig, EngineManagerService } from "../types";
+import { EngineManagerService } from "../types/engine-manager";
 import { Engine } from "../types";
-import { getConfig } from "../utils";
 
-class EngineManager implements EngineManagerService {
-	private engines = new Map<string, Engine>();
+const engines = new Map();
 
-	/**
-	 * Register an engine
-	 *
-	 * @param name The engine name
-	 * @param options The engine options
-	 */
-
-	async register(config: EngineConfig) {
-		let enginePath = config.resolve || `strapi-plugin-search-${config.name}`;
+export default ({ strapi }: { strapi: Strapi }): EngineManagerService => {
+	async function register(engine) {
+		console.log(engine);
+		let enginePath = engine.resolve || `strapi-plugin-search-${engine.name}`;
 		try {
 			enginePath = path.dirname(require.resolve(enginePath));
 		} catch (e) {
@@ -23,51 +16,36 @@ class EngineManager implements EngineManagerService {
 		}
 		const EngineProvider = (await import(enginePath)).default;
 		if (!EngineProvider) {
-			throw new Error(`Engine ${config.name} at "${enginePath}" has no export.`);
+			throw new Error(`Engine ${engine.name} at "${enginePath}" has no export.`);
 		}
 
-		if (!(EngineProvider.prototype instanceof Engine)) throw new Error(`Engine ${config.name} does not extend Engine`);
+		if (!(EngineProvider.prototype instanceof Engine)) {
+			throw new Error(`Engine ${engine.name} does not extend Engine`);
+		}
 
-		const documentIdField = getConfig<string>({
-			strapi,
-			path: "global.documentIdField",
-		});
-
-		this.engines.set(config.name, new EngineProvider({ config, documentIdField }));
+		engines.set(engine.name, new EngineProvider({ config: engine.options }));
 	}
 
-	/**
-	 * Retrieve an engine
-	 *
-	 * @param name The engine name
-	 * @returns The requested engine
-	 */
-
-	get(name: string) {
-		const engine = this.engines.get(name);
+	function get(name) {
+		const engine = engines.get(name);
 
 		if (!engine) throw new Error(`Engine "${name}" doesn't exist.`);
 
 		return engine;
 	}
 
-	/**
-	 * Retrieve the primary engine
-	 *
-	 * @returns All registered engines as a key value pair
-	 */
-
-	getAll(): [string, Engine][] {
-		return Array.from(this.engines.entries());
+	function getAll() {
+		return Array.from(engines.entries());
 	}
 
-	/**
-	 * Retrieve the number of registered engines
-	 *
-	 */
-	size(): number {
-		return this.engines.size;
+	function size() {
+		return engines.size;
 	}
-}
 
-export default (): EngineManagerService => new EngineManager();
+	return {
+		register,
+		get,
+		getAll,
+		size,
+	};
+};

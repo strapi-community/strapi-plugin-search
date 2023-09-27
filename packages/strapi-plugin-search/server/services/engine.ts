@@ -1,91 +1,84 @@
-import type { Strapi } from "@strapi/strapi";
-import type { EngineManagerService, EngineService } from "../types";
-import { getConfig, getService, isEmptyObject } from "../utils";
+import { Strapi } from "@strapi/strapi";
+import { getEngine, getService, isEmptyObject } from "../utils";
+import { EngineData, EngineService } from "../types";
 
-export default ({ strapi }: { strapi: Strapi }): EngineService => ({
-	async create({ uid, engine, index, data }) {
-		const documentIdField = getConfig<string>({
-			strapi,
-			path: "global.documentIdField",
-		});
+export default ({ strapi }: { strapi: Strapi }): EngineService => {
+	const engineManager = getService({ strapi, name: "engine-manager" });
+	const builder = getService({ strapi, name: "builder" });
 
-		if (isEmptyObject(data)) return;
+	async function createOne({ ct, index, data }) {
+		const structuredData = await builder.data({ ct, index, value: data });
 
-		const record = await getService<EngineManagerService>({
-			strapi,
-			name: "engineManager",
-		})
-			.get(engine)
-			.create({
-				index,
-				data,
-			});
-
-		strapi.entityService.update(uid, record.id, {
-			data: {
-				[documentIdField]: record.documentId,
-			},
-		});
-	},
-	update({ engine, index, key, data }) {
-		if (isEmptyObject(data)) return;
-
-		getService<EngineManagerService>({ strapi, name: "engineManager" }).get(engine).update({
-			index,
-			key,
-			data,
-		});
-	},
-	delete({ engine, index, key }) {
-		getService<EngineManagerService>({ strapi, name: "engineManager" }).get(engine).delete({
-			index,
-			key,
-		});
-	},
-	async createMany({ uid, engine, index, data }) {
-		const documentIdField = getConfig<string>({
-			strapi,
-			path: "global.documentIdField",
-		});
-
-		const records = data.filter((d) => isEmptyObject(d));
-
-		if (!records.length) return;
-
-		const iterator = getService<EngineManagerService>({
-			strapi,
-			name: "engineManager",
-		})
-			.get(engine)
-			.createMany({
-				index,
-				data: records,
-			});
-
-		for await (const batch of iterator) {
-			for await (const record of batch) {
-				strapi.entityService.update(uid, record.id, {
-					data: {
-						[documentIdField]: record.documentId,
-					},
-				});
-			}
+		if (isEmptyObject(structuredData)) {
+			return;
 		}
-	},
-	updateMany({ engine, index, data }) {
-		const records = data.filter((d) => isEmptyObject(d));
 
-		if (!records.length) return;
+		await engineManager.get(getEngine({ strapi, engine: index.engine })).create({
+			index: builder.index({ index }),
+			record: structuredData,
+		});
+	}
 
-		getService<EngineManagerService>({ strapi, name: "engineManager" }).get(engine).updateMany({
-			index,
-			data: records,
+	async function updateOne({ ct, index, data }) {
+		const structuredData = await builder.data({ ct, index, value: data });
+
+		if (isEmptyObject(structuredData)) {
+			return;
+		}
+
+		await engineManager.get(getEngine({ strapi, engine: index.engine })).update({
+			index: builder.index({ index }),
+			record: structuredData,
 		});
-	},
-	deleteMany({ engine, index, keys }) {
-		getService<EngineManagerService>({ strapi, name: "engineManager" }).get(engine).deleteMany({
-			index,
-			keys,
+	}
+
+	async function deleteOne({ ct, index, key }) {
+		await engineManager.get(getEngine({ strapi, engine: index.engine })).delete({
+			index: builder.index({ index }),
+			key: builder.key({ ct, index, record: { id: key } }),
 		});
-	},
-});
+	}
+
+	async function createMany({ ct, index, data }) {
+		const structuredData = await builder.data({ ct, index, value: data });
+
+		const records = structuredData.filter((record: EngineData) => !isEmptyObject(record));
+
+		if (!records.length) {
+			return;
+		}
+
+		await engineManager.get(getEngine({ strapi, engine: index.engine })).createMany({
+			index: builder.index({ index }),
+			records,
+		});
+	}
+
+	async function updateMany({ ct, index, data }) {
+		const structuredData = await builder.data({ ct, index, value: data });
+		const records = structuredData.filter((record: EngineData) => !isEmptyObject(record));
+		if (!records.length) {
+			return;
+		}
+		await engineManager.get(getEngine({ strapi, engine: index.engine })).updateMany({
+			index: builder.index({ index }),
+			records,
+		});
+	}
+
+	async function deleteMany({ ct, index, keys }) {
+		await engineManager.get(getEngine({ strapi, engine: index.engine })).deleteMany({
+			index: builder.index({ index }),
+			keys: keys.map((id) => builder.key({ ct, index, record: { id } })),
+		});
+	}
+
+	return {
+		create: createOne,
+		update: updateOne,
+		delete: deleteOne,
+		createMany,
+		updateMany,
+		deleteMany,
+	};
+};

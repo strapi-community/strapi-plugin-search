@@ -1,53 +1,5 @@
-export interface EngineValidateIndexNameParams {
-	name: string;
-}
-
-export interface EngineKeyParam {
-	key: string;
-}
-
-export interface EngineKeysParam {
-	keys: string[];
-}
-
-export interface EngineIndexParam {
-	index: string;
-}
-
-export interface EngineDataParam<T> {
-	data: T;
-}
-
-export type EngineValidateDocumentKeyParams = EngineKeyParam;
-export type EngineValidateDocumentKey = EngineIndexParam & EngineKeyParam;
-export type EngineCreateParams = EngineIndexParam & EngineDataParam<Record<string, unknown>>;
-export type EngineUpdateParams = EngineIndexParam & EngineDataParam<Record<string, unknown>> & EngineKeyParam;
-export type EngineDeleteParams = EngineIndexParam & EngineKeyParam;
-export type EngineCreateManyParams = EngineIndexParam & EngineDataParam<Record<string, unknown>[]>;
-export type EngineUpdateManyParams = EngineIndexParam & EngineDataParam<Record<string, unknown>[]>;
-export type EngineDeleteManyParams = EngineIndexParam & EngineKeysParam;
-
-export interface EngineCreateResponse {
-	id: string;
-	documentId: string;
-}
-
-export abstract class Engine {
-	abstract validateIndexName({ name }: EngineValidateIndexNameParams): boolean;
-
-	abstract validateDocumentKey({ key }: EngineValidateDocumentKeyParams): boolean;
-	abstract create({ index, data }: EngineCreateParams): EngineCreateResponse | Promise<EngineCreateResponse>;
-	abstract update({ index, key, data }: EngineUpdateParams): void | Promise<void>;
-	abstract delete({ index, key }: EngineDeleteParams): void | Promise<void>;
-	abstract createMany({
-		index,
-		data,
-	}: EngineCreateManyParams):
-		| IterableIterator<EngineCreateResponse[]>
-		| IterableIterator<Promise<EngineCreateResponse[]>>;
-	abstract updateMany({ index, data }: EngineUpdateManyParams): void | Promise<void>;
-	abstract deleteMany({ index, keys }: EngineDeleteManyParams): void | Promise<void>;
-}
+import { ContentType, ContentTypeIndex } from "./content-type";
+import { PossiblePromise } from "./shared";
 
 export interface EngineConfig {
 	name: string;
@@ -56,47 +8,83 @@ export interface EngineConfig {
 	options: Record<string, unknown>;
 }
 
-export interface EngineServiceEngineParam {
-	engine: string;
-}
-
-export interface EngineServiceUIDParam {
-	uid: string;
-}
-
-export type EngineServiceIndexParam = EngineIndexParam;
-export type EngineServiceDataParam<T> = EngineDataParam<T>;
-export type EngineServiceKeyParam = EngineKeyParam;
-export type EngineServiceKeysParam = EngineKeysParam;
-
-export type EngineServiceCreateParams = EngineServiceEngineParam &
-	EngineServiceIndexParam &
-	EngineServiceDataParam<Record<string, unknown>> &
-	EngineServiceUIDParam;
-export type EngineServiceUpdateParams = EngineServiceEngineParam &
-	EngineServiceIndexParam &
-	EngineServiceDataParam<Record<string, unknown>> &
-	EngineServiceKeyParam;
-export type EngineServiceDeleteParams = EngineServiceEngineParam & EngineServiceIndexParam & EngineServiceKeyParam;
-export type EngineServiceCreateManyParams = EngineServiceEngineParam &
-	EngineServiceIndexParam &
-	EngineServiceDataParam<Record<string, unknown>[]> &
-	EngineServiceUIDParam;
-export type EngineServiceUpdateManyParams = EngineServiceEngineParam &
-	EngineServiceIndexParam &
-	EngineServiceDataParam<Record<string, unknown>[]>;
-export type EngineServiceDeleteManyParams = EngineServiceEngineParam & EngineServiceIndexParam & EngineServiceKeysParam;
-
 export interface Index {
 	prefix?: string;
-	name: string | (({ record }) => string | Promise<string>);
+	name: string;
 }
 
+export type EngineKey = string | number;
+
+export interface EngineKeyParam {
+	key: EngineKey;
+}
+
+export interface EngineKeysParam {
+	keys: EngineKey[];
+}
+
+export interface EngineContentTypeParam {
+	ct: ContentType;
+}
+export interface EngineIndexParam {
+	index: ContentTypeIndex;
+}
+
+export type EngineData = Record<string, any>;
+
+export interface EngineDataParam {
+	data: EngineData;
+}
+
+export interface EngineDataArrayParam {
+	data: EngineData[];
+}
+
+export interface EngineRecordParam {
+	record: EngineData;
+}
+
+export interface EngineRecordArrayParam {
+	record: EngineData[];
+}
+
+export type EngineCreateParams = EngineContentTypeParam & EngineIndexParam & EngineDataParam;
+export type EngineUpdateParams = EngineContentTypeParam & EngineIndexParam & EngineDataParam;
+export type EngineDeleteParams = EngineContentTypeParam & EngineIndexParam & EngineKeyParam;
+export type EngineCreateManyParams = EngineContentTypeParam & EngineIndexParam & EngineDataArrayParam;
+export type EngineUpdateManyParams = EngineContentTypeParam & EngineIndexParam & EngineDataArrayParam;
+export type EngineDeleteManyParams = EngineContentTypeParam & EngineIndexParam & EngineKeysParam;
+
+export abstract class Engine {
+	abstract buildIndexName({ name }: { name: string }): string;
+	abstract getKeyField(): string;
+	abstract buildKeyValue({ value }: { value: EngineKey }): EngineKey;
+	abstract create({ index, record }: { index: string; record: EngineData }): PossiblePromise<void>;
+	abstract update({ index, record }: { index: string; record: EngineData }): PossiblePromise<void>;
+	abstract delete({ index, key }: { index: string; key: { field: string; value: EngineKey } }): PossiblePromise<void>;
+	abstract createMany({ index, records }: { index: string; records: EngineRecordArrayParam }): PossiblePromise<void>;
+	abstract updateMany({ index, records }: { index: string; records: EngineRecordArrayParam }): PossiblePromise<void>;
+	abstract deleteMany({
+		index,
+		keys,
+	}: {
+		index: string;
+		keys: Array<{ field: string; value: EngineKey }>;
+	}): PossiblePromise<void>;
+}
+
+export type EngineServiceCreateParams = EngineContentTypeParam & EngineIndexParam & EngineDataParam;
+export type EngineServiceUpdateParams = EngineContentTypeParam & EngineIndexParam & EngineDataParam;
+export type EngineServiceDeleteParams = EngineContentTypeParam & EngineIndexParam & EngineKeyParam;
+export type EngineServiceCreateManyParams = EngineContentTypeParam & EngineIndexParam & EngineDataParam;
+export type EngineServiceUpdateManyParams = EngineContentTypeParam & EngineIndexParam & EngineDataParam;
+export type EngineServiceDeleteManyParams = EngineContentTypeParam & EngineIndexParam & EngineKeysParam;
+
 export interface EngineService {
-	create({ uid, engine, index, data }: EngineServiceCreateParams): void;
-	update({ engine, index, key, data }: EngineServiceUpdateParams): void;
-	delete({ engine, index, key }: EngineServiceDeleteParams): void;
-	createMany({ uid, engine, index, data }: EngineServiceCreateManyParams): void;
-	updateMany({ engine, index, data }: EngineServiceUpdateManyParams): void;
-	deleteMany({ engine, index, keys }: EngineServiceDeleteManyParams): void;
+	create({ ct, index, data }: EngineServiceCreateParams): PossiblePromise<void>;
+	update({ ct, index, data }: EngineServiceUpdateParams): PossiblePromise<void>;
+	delete({ ct, index, key }: EngineServiceDeleteParams): PossiblePromise<void>;
+	createMany({ ct, index, data }: EngineServiceCreateManyParams): PossiblePromise<void>;
+	updateMany({ ct, index, data }: EngineServiceUpdateManyParams): PossiblePromise<void>;
+	deleteMany({ ct, index, keys }: EngineServiceDeleteManyParams): PossiblePromise<void>;
 }
