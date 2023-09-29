@@ -1,15 +1,15 @@
 import { Strapi } from "@strapi/strapi";
 import { getEngine, getService, isEmptyObject } from "../utils";
-import { EngineData, EngineService } from "../types";
+import { EngineRecord, EngineRecordArray, EngineService } from "../types";
 
 export default ({ strapi }: { strapi: Strapi }): EngineService => {
 	const engineManager = getService({ strapi, name: "engine-manager" });
 	const builder = getService({ strapi, name: "builder" });
 
 	async function createOne({ ct, index, data }) {
-		const structuredData = await builder.data({ ct, index, value: data });
+		const structuredData = (await builder.data({ ct, index, value: data })) as EngineRecord;
 
-		if (isEmptyObject(structuredData)) {
+		if (isEmptyObject(structuredData.record)) {
 			return;
 		}
 
@@ -20,9 +20,9 @@ export default ({ strapi }: { strapi: Strapi }): EngineService => {
 	}
 
 	async function updateOne({ ct, index, data }) {
-		const structuredData = await builder.data({ ct, index, value: data });
+		const structuredData = (await builder.data({ ct, index, value: data })) as EngineRecord;
 
-		if (isEmptyObject(structuredData)) {
+		if (isEmptyObject(structuredData.record)) {
 			return;
 		}
 
@@ -40,9 +40,9 @@ export default ({ strapi }: { strapi: Strapi }): EngineService => {
 	}
 
 	async function createMany({ ct, index, data }) {
-		const structuredData = await builder.data({ ct, index, value: data });
+		const structuredData = (await builder.data({ ct, index, value: data })) as EngineRecordArray;
 
-		const records = structuredData.filter((record: EngineData) => !isEmptyObject(record));
+		const records = structuredData.filter((data) => !isEmptyObject(data));
 
 		if (!records.length) {
 			return;
@@ -55,8 +55,8 @@ export default ({ strapi }: { strapi: Strapi }): EngineService => {
 	}
 
 	async function updateMany({ ct, index, data }) {
-		const structuredData = await builder.data({ ct, index, value: data });
-		const records = structuredData.filter((record: EngineData) => !isEmptyObject(record));
+		const structuredData = (await builder.data({ ct, index, value: data })) as EngineRecordArray;
+		const records = structuredData.filter((record) => !isEmptyObject(record));
 		if (!records.length) {
 			return;
 		}
