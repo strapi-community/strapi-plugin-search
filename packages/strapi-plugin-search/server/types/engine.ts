@@ -40,37 +40,47 @@ export interface EngineDataArrayParam {
 	data: EngineData[];
 }
 
-export interface EngineRecordParam {
+export interface EngineRecord {
+	key: { field: string; value: EngineKey };
 	record: EngineData;
 }
+export type EngineRecordArray = EngineData[];
 
-export interface EngineRecordArrayParam {
-	record: EngineData[];
+export interface EngineCreateParams {
+	index: string;
+	record: EngineRecord;
 }
-
-export type EngineCreateParams = EngineContentTypeParam & EngineIndexParam & EngineDataParam;
-export type EngineUpdateParams = EngineContentTypeParam & EngineIndexParam & EngineDataParam;
-export type EngineDeleteParams = EngineContentTypeParam & EngineIndexParam & EngineKeyParam;
-export type EngineCreateManyParams = EngineContentTypeParam & EngineIndexParam & EngineDataArrayParam;
-export type EngineUpdateManyParams = EngineContentTypeParam & EngineIndexParam & EngineDataArrayParam;
-export type EngineDeleteManyParams = EngineContentTypeParam & EngineIndexParam & EngineKeysParam;
+export interface EngineUpdateParams {
+	index: string;
+	record: EngineRecord;
+}
+export interface EngineDeleteParams {
+	index: string;
+	key: { field: string; value: EngineKey };
+}
+export interface EngineCreateManyParams {
+	index: string;
+	records: EngineData[];
+}
+export interface EngineUpdateManyParams {
+	index: string;
+	records: EngineData[];
+}
+export interface EngineDeleteManyParams {
+	index: string;
+	keys: Array<{ field: string; value: EngineKey }>;
+}
 
 export abstract class Engine {
 	abstract buildIndexName({ name }: { name: string }): string;
 	abstract getKeyField(): string;
 	abstract buildKeyValue({ value }: { value: EngineKey }): EngineKey;
-	abstract create({ index, record }: { index: string; record: EngineData }): PossiblePromise<void>;
-	abstract update({ index, record }: { index: string; record: EngineData }): PossiblePromise<void>;
-	abstract delete({ index, key }: { index: string; key: { field: string; value: EngineKey } }): PossiblePromise<void>;
-	abstract createMany({ index, records }: { index: string; records: EngineRecordArrayParam }): PossiblePromise<void>;
-	abstract updateMany({ index, records }: { index: string; records: EngineRecordArrayParam }): PossiblePromise<void>;
-	abstract deleteMany({
-		index,
-		keys,
-	}: {
-		index: string;
-		keys: Array<{ field: string; value: EngineKey }>;
-	}): PossiblePromise<void>;
+	abstract create({ index, record }: EngineCreateParams): PossiblePromise<void>;
+	abstract update({ index, record }: { index: string; record: EngineRecord }): PossiblePromise<void>;
+	abstract delete({ index, key }: EngineDeleteParams): PossiblePromise<void>;
+	abstract createMany({ index, records }: EngineCreateManyParams): PossiblePromise<void>;
+	abstract updateMany({ index, records }: EngineUpdateManyParams): PossiblePromise<void>;
+	abstract deleteMany({ index, keys }: EngineDeleteManyParams): PossiblePromise<void>;
 }
 
 export type EngineServiceCreateParams = EngineContentTypeParam & EngineIndexParam & EngineDataParam;
