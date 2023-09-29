@@ -10,7 +10,7 @@ export default ({ strapi }: { strapi: Strapi }): DataService => {
 		const obj: EngineData = {};
 
 		if (!fields) {
-			return data;
+			return obj;
 		}
 
 		for (const field of fields) {
