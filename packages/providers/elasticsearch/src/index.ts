@@ -39,13 +39,31 @@ export default class ElasticSearchEngine implements Engine {
 		await this.client.delete({ index, id: key.value });
 	}
 	async createMany({ index, records }) {
-		//
+		await this.client.helpers.bulk({
+			datasource: records,
+			onDocument(doc) {
+				return {
+					create: { _index: index, _id: doc.id },
+				};
+			},
+		});
 	}
 	async updateMany({ index, records }) {
-		//
+		await this.client.helpers.bulk({
+			datasource: records,
+			onDocument(doc) {
+				return [{ update: { _index: index, _id: doc.id } }, { doc_as_upsert: true }];
+			},
+		});
 	}
 	async deleteMany({ index, keys }) {
-		const docIds = keys.map((k) => k.value);
-		//
+		await this.client.helpers.bulk({
+			datasource: keys,
+			onDocument(doc) {
+				return {
+					delete: { _index: index, _id: doc.value },
+				};
+			},
+		});
 	}
 }
