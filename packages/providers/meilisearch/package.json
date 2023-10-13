@@ -28,7 +28,7 @@
 	],
 	"dependencies": {
 		"meilisearch": "^0.35.0",
-		"@strapi-community/strapi-plugin-search": "workspace:^"
+		"@strapi-community/strapi-plugin-search": "0.1.0"
 	},
 	"devDependencies": {
 		"typescript": "^5.2.2"
