@@ -28,7 +28,7 @@
 	],
 	"dependencies": {
 		"@elastic/elasticsearch": "^8.10.0",
-		"@strapi-community/strapi-plugin-search": "workspace:^"
+		"@strapi-community/strapi-plugin-search": "0.1.0"
 	},
 	"devDependencies": {
 		"typescript": "^5.2.2"
