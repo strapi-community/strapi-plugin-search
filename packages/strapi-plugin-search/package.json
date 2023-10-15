@@ -10,7 +10,7 @@
 		"lint": "eslint --fix ."
 	},
 	"strapi": {
-		"name": "strapi-plugin-search",
+		"name": "search",
 		"description": "Description of strapi-plugin-search plugin",
 		"kind": "plugin"
 	},
