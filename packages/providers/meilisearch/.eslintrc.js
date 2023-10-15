@@ -1,2 +1,2 @@
-const base = require("../../../.eslintrc.js"); 
+const base = require("../../../.eslintrc.js");
 module.exports = base;
