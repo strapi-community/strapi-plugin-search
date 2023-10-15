@@ -1,18 +1,18 @@
 {
-  "kind": "collectionType",
-  "collectionName": "news",
-  "info": {
-    "singularName": "new",
-    "pluralName": "news",
-    "displayName": "new"
-  },
-  "options": {
-    "draftAndPublish": true
-  },
-  "pluginOptions": {},
-  "attributes": {
-    "user": {
-      "type": "string"
-    }
-  }
+	"kind": "collectionType",
+	"collectionName": "news",
+	"info": {
+		"singularName": "new",
+		"pluralName": "news",
+		"displayName": "new"
+	},
+	"options": {
+		"draftAndPublish": true
+	},
+	"pluginOptions": {},
+	"attributes": {
+		"user": {
+			"type": "string"
+		}
+	}
 }

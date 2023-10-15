@@ -1,33 +1,33 @@
 {
-  "name": "@strapi-community/provider-search-meilisearch",
-  "version": "0.1.0",
-  "main": "dist/index.js",
-  "license": "MIT",
-  "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "lint": "eslint --fix ."
-  },
-  "author": {
-    "name": "Daedalus",
-    "url": "https://github.com/ComfortablyCoding"
-  },
-  "maintainers": [
-    {
-      "name": "Strapi Community",
-      "url": "https://github.com/strapi-community"
-    },
-    {
-      "name": "Daedalus",
-      "url": "https://github.com/ComfortablyCoding"
-    },
-    {
-      "name": "itsnoa04",
-      "url": "https://github.com/itsnoa04"
-    }
-  ],
-  "dependencies": {
-    "meilisearch": "^0.35.0",
-    "@strapi-community/strapi-plugin-search": "0.1.0"
-  },
-  "devDependencies": {}
+	"name": "@strapi-community/provider-search-meilisearch",
+	"version": "0.1.0",
+	"main": "dist/index.js",
+	"license": "MIT",
+	"scripts": {
+		"build": "tsc -p tsconfig.json",
+		"lint": "eslint --fix ."
+	},
+	"author": {
+		"name": "Daedalus",
+		"url": "https://github.com/ComfortablyCoding"
+	},
+	"maintainers": [
+		{
+			"name": "Strapi Community",
+			"url": "https://github.com/strapi-community"
+		},
+		{
+			"name": "Daedalus",
+			"url": "https://github.com/ComfortablyCoding"
+		},
+		{
+			"name": "itsnoa04",
+			"url": "https://github.com/itsnoa04"
+		}
+	],
+	"dependencies": {
+		"meilisearch": "^0.35.0",
+		"@strapi-community/strapi-plugin-search": "0.1.0"
+	},
+	"devDependencies": {}
 }

@@ -3,77 +3,77 @@ import { getEngine, getService } from "../utils";
 import { BuilderService, DBQuery, EngineRecordArray } from "../types";
 
 export default ({ strapi }: { strapi: Strapi }): BuilderService => {
-  const engineManager = getService({ strapi, name: "engine-manager" });
+	const engineManager = getService({ strapi, name: "engine-manager" });
 
-  function index({ index }) {
-    const prefix = index.prefix || "";
-    const name = index.name;
+	function index({ index }) {
+		const prefix = index.prefix || "";
+		const name = index.name;
 
-    return engineManager.get(getEngine({ strapi, engine: index.engine })).buildIndexName({ name: prefix + name });
-  }
+		return engineManager.get(getEngine({ strapi, engine: index.engine })).buildIndexName({ name: prefix + name });
+	}
 
-  function key({ ct, index, record }) {
-    const engine = engineManager.get(getEngine({ strapi, engine: index.engine }));
+	function key({ ct, index, record }) {
+		const engine = engineManager.get(getEngine({ strapi, engine: index.engine }));
 
-    return { field: engine.getKeyField(), value: engine.buildKeyValue({ value: ct.uid + ":" + record.id }) };
-  }
+		return { field: engine.getKeyField(), value: engine.buildKeyValue({ value: ct.uid + ":" + record.id }) };
+	}
 
-  async function data({ ct, index, value }) {
-    if (Array.isArray(value)) {
-      let records: EngineRecordArray = [];
-      for (let i = 0; i < value.length; i++) {
-        try {
-          const record = await getService({ strapi, name: "data" }).sanitize({
-            index,
-            data: value[i],
-          });
-          const recordKey = key({ ct, index, record: value[i] });
-          record[recordKey.field] = recordKey.value;
-          records.push(record);
-        } catch (error) {
-          console.log(error);
-        }
-      }
-      return records;
-    }
-    return {
-      key: key({ ct, index, record: value }),
-      record: await getService({ strapi, name: "data" }).sanitize({
-        index,
-        data: value,
-      }),
-    };
-  }
+	async function data({ ct, index, value }) {
+		if (Array.isArray(value)) {
+			let records: EngineRecordArray = [];
+			for (let i = 0; i < value.length; i++) {
+				try {
+					const record = await getService({ strapi, name: "data" }).sanitize({
+						index,
+						data: value[i],
+					});
+					const recordKey = key({ ct, index, record: value[i] });
+					record[recordKey.field] = recordKey.value;
+					records.push(record);
+				} catch (error) {
+					console.log(error);
+				}
+			}
+			return records;
+		}
+		return {
+			key: key({ ct, index, record: value }),
+			record: await getService({ strapi, name: "data" }).sanitize({
+				index,
+				data: value,
+			}),
+		};
+	}
 
-  async function query({ ct, event }) {
-    let q: DBQuery = {};
-    const { action, params, state, result } = event;
+	async function query({ ct, event }) {
+		let q: DBQuery = {};
+		const { action, params, state, result } = event;
 
-    // populate single level of data
-    if (action !== "afterDelete" && action !== "afterDeleteMany" && action !== "beforeUpdateMany") {
-      q.populate = await getService({ strapi, name: "populate-builder", plugin: "content-manager" })(ct.uid)
-        .populateDeep(1)
-        .build();
-    }
+		// populate single level of data
+		if (action !== "afterDelete" && action !== "afterDeleteMany" && action !== "beforeUpdateMany") {
+			q.populate = await getService({ strapi, name: "populate-builder", plugin: "content-manager" })(ct.uid)
+				.populateDeep(1)
+				.build();
+		}
 
-    if (action === "beforeDeleteMany" || action === "beforeUpdateMany") {
-      q.where = params.where;
-      q.select = ["id"];
-    } else if (action === "afterUpdateMany") {
-      q.where = { id: state.search?.ids };
-    } else if (action === "afterCreate" || action === "afterUpdate") {
-      q.where = { id: result.id };
-    } else if (action === "afterCreateMany") {
-      q.where = { id: result.ids };
-    }
+		if (action === "beforeDeleteMany" || action === "beforeUpdateMany") {
+			q.where = params.where;
+			q.select = ["id"];
+		} else if (action === "afterUpdateMany") {
+			q.where = { id: state.search?.ids };
+		} else if (action === "afterCreate" || action === "afterUpdate") {
+			q.where = { id: result.id };
+		} else if (action === "afterCreateMany") {
+			q.where = { id: result.ids };
+		}
 
-    return q;
-  }
+		return q;
+	}
 
-  return {
-    index,
-    key,
-    data,
-    query,
-  };
+	return {
+		index,
+		key,
+		data,
+		query,
+	};
 };

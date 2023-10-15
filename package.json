@@ -1,24 +1,24 @@
 {
-  "name": "root",
-  "private": true,
-  "workspaces": [
-    "packages/*",
-    "packages/providers/*",
-    "examples/*"
-  ],
-  "scripts": {
-    "build": "lerna run build",
-    "lint": "lerna run lint",
-    "format": "prettier --write ."
-  },
-  "dependencies": {},
-  "devDependencies": {
-    "lerna": "^7.3.1",
-    "eslint": "^8.51.0",
-    "eslint-config-prettier": "^9.0.0",
-    "@typescript-eslint/parser": "^6.7.5",
-    "@typescript-eslint/eslint-plugin": "^6.7.5",
-    "prettier": "^3.0.3",
-    "typescript": "^5.2.2"
-  }
+	"name": "root",
+	"private": true,
+	"workspaces": [
+		"packages/*",
+		"packages/providers/*",
+		"examples/*"
+	],
+	"scripts": {
+		"build": "lerna run build",
+		"lint": "lerna run lint",
+		"format": "prettier --write ."
+	},
+	"dependencies": {},
+	"devDependencies": {
+		"lerna": "^7.3.1",
+		"eslint": "^8.51.0",
+		"eslint-config-prettier": "^9.0.0",
+		"@typescript-eslint/parser": "^6.7.5",
+		"@typescript-eslint/eslint-plugin": "^6.7.5",
+		"prettier": "^3.0.3",
+		"typescript": "^5.2.2"
+	}
 }
