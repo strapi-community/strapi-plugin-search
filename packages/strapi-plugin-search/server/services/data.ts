@@ -14,7 +14,7 @@ export default ({ strapi }: { strapi: Strapi }): DataService => {
 		}
 
 		for (const field of fields) {
-			const base = await this.sanitizeField({ field, data });
+			const base = await sanitizeField({ field, data });
 			if (base.value) {
 				obj[base.field] = base.value;
 			}
