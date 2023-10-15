@@ -2,9 +2,6 @@ const base = require("../../.eslintrc.js");
 
 module.exports = {
   ...base,
-  global: {
-    strapi,
-  },
   ignorePatterns: [...base.ignorePatterns, "strapi-admin.js", "strapi-server.js"],
   overrides: [
     {
