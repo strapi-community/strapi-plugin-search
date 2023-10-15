@@ -1,3 +1,5 @@
+import { plugin } from "./schema";
+
 export default {
 	default() {
 		return {
@@ -6,5 +8,7 @@ export default {
 			contentTypes: [],
 		};
 	},
-	validator() {},
+	validator(config) {
+		plugin.parse(config);
+	},
 };
