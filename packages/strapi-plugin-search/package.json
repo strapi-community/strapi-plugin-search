@@ -2,11 +2,36 @@
   "name": "@strapi-community/strapi-plugin-search",
   "version": "0.1.0",
   "description": "This is the description of the plugin.",
+  "license": "MIT",
+  "scripts": {
+    "build": "yarn build:front && yarn build:back",
+    "build:front": "tsc -p ./tsconfig.json",
+    "build:back": "tsc -p ./tsconfig.server.json",
+    "lint": "eslint --fix ."
+  },
   "strapi": {
     "name": "strapi-plugin-search",
     "description": "Description of strapi-plugin-search plugin",
     "kind": "plugin"
   },
+  "author": {
+    "name": "itsnoa04",
+    "url": "https://github.com/itsnoa04"
+  },
+  "maintainers": [
+    {
+      "name": "Strapi Community",
+      "url": "https://github.com/strapi-community"
+    },
+    {
+      "name": "itsnoa04",
+      "url": "https://github.com/itsnoa04"
+    },
+    {
+      "name": "Daedalus",
+      "url": "https://github.com/ComfortablyCoding"
+    }
+  ],
   "dependencies": {
     "@strapi/design-system": "^1.12.2",
     "@strapi/helper-plugin": "^4.14.4",
@@ -19,11 +44,11 @@
     "@types/react-dom": "^18.2.13",
     "@types/react-router-dom": "^5.3.3",
     "@types/styled-components": "^5.1.28",
+    "eslint-plugin-react": "^7.33.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.16.0",
-    "styled-components": "^6.0.9",
-    "typescript": "^5.2.2"
+    "react-router-dom": "5.3.4",
+    "styled-components": "^6.0.9"
   },
   "peerDependencies": {
     "@strapi/strapi": "^4.14.4",
@@ -32,23 +57,8 @@
     "react-router-dom": "^6.15.0",
     "styled-components": "^6.0.7"
   },
-  "author": {
-    "name": "A Strapi developer"
-  },
-  "maintainers": [
-    {
-      "name": "A Strapi developer"
-    }
-  ],
   "engines": {
     "node": ">=14.19.1 <=18.x.x",
     "npm": ">=6.0.0"
-  },
-  "scripts": {
-    "develop": "tsc -p tsconfig.server.json -w",
-    "build": "tsc -p tsconfig.server.json",
-    "lint:fix": "eslint --fix \"./**/*.{ts,js,tsx}\"",
-    "format": "prettier --write \"./**/*.{ts,js,tsx}\""
-  },
-  "license": "MIT"
+  }
 }

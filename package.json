@@ -7,17 +7,18 @@
     "examples/*"
   ],
   "scripts": {
-    "lint:fix": "lerna run lint:fix",
-    "format": "lerna run format"
+    "build": "lerna run build",
+    "lint": "lerna run lint",
+    "format": "prettier --write ."
   },
   "dependencies": {},
   "devDependencies": {
-    "@strapi-community/eslint-config": "^0.4.3",
-    "@typescript-eslint/eslint-plugin": "^6.7.5",
-    "@typescript-eslint/parser": "^6.7.5",
+    "lerna": "^7.3.1",
     "eslint": "^8.51.0",
     "eslint-config-prettier": "^9.0.0",
-    "lerna": "^7.3.1",
-    "prettier": "^3.0.3"
+    "@typescript-eslint/parser": "^6.7.5",
+    "@typescript-eslint/eslint-plugin": "^6.7.5",
+    "prettier": "^3.0.3",
+    "typescript": "^5.2.2"
   }
 }
