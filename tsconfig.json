@@ -1,26 +1,26 @@
 {
-  "$schema": "https://json.schemastore.org/tsconfig",
-  "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "noImplicitAny": false,
-    "sourceMap": true,
-    "declaration": true,
-    "declarationMap": true,
-    "noEmitOnError": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "noImplicitThis": true,
-    "skipLibCheck": true,
-    "incremental": true
-  },
-  "references": [
-    { "path": "./packages/strapi-plugin-search" },
-    { "path": "./packages/providers/algolia" },
-    { "path": "./packages/providers/elasticsearch" },
-    { "path": "./packages/providers/meilisearch" },
-    { "path": "./packages/eslint-config" }
-  ]
+	"$schema": "https://json.schemastore.org/tsconfig",
+	"compilerOptions": {
+		"target": "ESNext",
+		"module": "ESNext",
+		"moduleResolution": "Node",
+		"noImplicitAny": false,
+		"sourceMap": true,
+		"declaration": true,
+		"declarationMap": true,
+		"noEmitOnError": true,
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"strict": true,
+		"noImplicitThis": true,
+		"skipLibCheck": true,
+		"incremental": true
+	},
+	"references": [
+		{ "path": "./packages/strapi-plugin-search" },
+		{ "path": "./packages/providers/algolia" },
+		{ "path": "./packages/providers/elasticsearch" },
+		{ "path": "./packages/providers/meilisearch" },
+		{ "path": "./packages/eslint-config" }
+	]
 }
