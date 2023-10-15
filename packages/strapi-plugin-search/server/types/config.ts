@@ -4,8 +4,8 @@ import type { Field } from "./field";
 
 export interface PluginConfig {
 	global: {
-		index?: Index;
-		engine?: string;
+		index: Index;
+		engine: string;
 		fields?: Field[];
 	};
 	engines: EngineConfig[];

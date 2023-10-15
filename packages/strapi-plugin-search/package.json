@@ -36,7 +36,8 @@
 		"@strapi/design-system": "^1.12.2",
 		"@strapi/helper-plugin": "^4.14.4",
 		"@strapi/icons": "^1.12.2",
-		"prop-types": "^15.8.1"
+		"prop-types": "^15.8.1",
+		"zod": "^3.22.4"
 	},
 	"devDependencies": {
 		"@strapi/typescript-utils": "^4.14.4",
