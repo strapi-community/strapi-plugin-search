@@ -1,4 +1,4 @@
-module.exports= {
+module.exports = {
   $schema: "https://json.schemastore.org/eslintrc",
   root: true,
   extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended", "prettier"],
@@ -9,5 +9,5 @@ module.exports= {
     project: ["./tsconfig.json", "./tsconfig.server.json"],
   },
   plugins: ["@typescript-eslint"],
-  ignorePatterns: ["node_modules", "build", "dist","**/.*"],
+  ignorePatterns: ["node_modules", "build", "dist", "**/.*"],
 };

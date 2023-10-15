@@ -1,10 +1,10 @@
 export default {
-	default() {
-		return {
-			global: {},
-			engines: [],
-			contentTypes: [],
-		};
-	},
-	validator() {},
+  default() {
+    return {
+      global: {},
+      engines: [],
+      contentTypes: [],
+    };
+  },
+  validator() {},
 };

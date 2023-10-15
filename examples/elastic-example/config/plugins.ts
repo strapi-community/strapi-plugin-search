@@ -1,5 +1,5 @@
 module.exports = {
-  "strapi-plugin-search":{
-    "enabled": true,
-  }
+  "strapi-plugin-search": {
+    enabled: true,
+  },
 };

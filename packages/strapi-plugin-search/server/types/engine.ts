@@ -2,85 +2,85 @@ import { ContentType, ContentTypeIndex } from "./content-type";
 import { PossiblePromise } from "./shared";
 
 export interface EngineConfig {
-	name: string;
-	resolve?: string;
-	enabled?: boolean;
-	options: Record<string, unknown>;
+  name: string;
+  resolve?: string;
+  enabled?: boolean;
+  options: Record<string, unknown>;
 }
 
 export interface Index {
-	prefix?: string;
-	name: string;
+  prefix?: string;
+  name: string;
 }
 
 export type EngineKey = string | number;
 
 export interface EngineKeyParam {
-	key: EngineKey;
+  key: EngineKey;
 }
 
 export interface EngineKeysParam {
-	keys: EngineKey[];
+  keys: EngineKey[];
 }
 
 export interface EngineContentTypeParam {
-	ct: ContentType;
+  ct: ContentType;
 }
 export interface EngineIndexParam {
-	index: ContentTypeIndex;
+  index: ContentTypeIndex;
 }
 
 export type EngineData = Record<string, any>;
 
 export interface EngineDataParam {
-	data: EngineData;
+  data: EngineData;
 }
 
 export interface EngineDataArrayParam {
-	data: EngineData[];
+  data: EngineData[];
 }
 
 export interface EngineRecord {
-	key: { field: string; value: EngineKey };
-	record: EngineData;
+  key: { field: string; value: EngineKey };
+  record: EngineData;
 }
 export type EngineRecordArray = EngineData[];
 
 export interface EngineCreateParams {
-	index: string;
-	record: EngineRecord;
+  index: string;
+  record: EngineRecord;
 }
 export interface EngineUpdateParams {
-	index: string;
-	record: EngineRecord;
+  index: string;
+  record: EngineRecord;
 }
 export interface EngineDeleteParams {
-	index: string;
-	key: { field: string; value: EngineKey };
+  index: string;
+  key: { field: string; value: EngineKey };
 }
 export interface EngineCreateManyParams {
-	index: string;
-	records: EngineData[];
+  index: string;
+  records: EngineData[];
 }
 export interface EngineUpdateManyParams {
-	index: string;
-	records: EngineData[];
+  index: string;
+  records: EngineData[];
 }
 export interface EngineDeleteManyParams {
-	index: string;
-	keys: Array<{ field: string; value: EngineKey }>;
+  index: string;
+  keys: Array<{ field: string; value: EngineKey }>;
 }
 
 export abstract class Engine {
-	abstract buildIndexName({ name }: { name: string }): string;
-	abstract getKeyField(): string;
-	abstract buildKeyValue({ value }: { value: EngineKey }): EngineKey;
-	abstract create({ index, record }: EngineCreateParams): PossiblePromise<void>;
-	abstract update({ index, record }: { index: string; record: EngineRecord }): PossiblePromise<void>;
-	abstract delete({ index, key }: EngineDeleteParams): PossiblePromise<void>;
-	abstract createMany({ index, records }: EngineCreateManyParams): PossiblePromise<void>;
-	abstract updateMany({ index, records }: EngineUpdateManyParams): PossiblePromise<void>;
-	abstract deleteMany({ index, keys }: EngineDeleteManyParams): PossiblePromise<void>;
+  abstract buildIndexName({ name }: { name: string }): string;
+  abstract getKeyField(): string;
+  abstract buildKeyValue({ value }: { value: EngineKey }): EngineKey;
+  abstract create({ index, record }: EngineCreateParams): PossiblePromise<void>;
+  abstract update({ index, record }: { index: string; record: EngineRecord }): PossiblePromise<void>;
+  abstract delete({ index, key }: EngineDeleteParams): PossiblePromise<void>;
+  abstract createMany({ index, records }: EngineCreateManyParams): PossiblePromise<void>;
+  abstract updateMany({ index, records }: EngineUpdateManyParams): PossiblePromise<void>;
+  abstract deleteMany({ index, keys }: EngineDeleteManyParams): PossiblePromise<void>;
 }
 
 export type EngineServiceCreateParams = EngineContentTypeParam & EngineIndexParam & EngineDataParam;
@@ -91,10 +91,10 @@ export type EngineServiceUpdateManyParams = EngineContentTypeParam & EngineIndex
 export type EngineServiceDeleteManyParams = EngineContentTypeParam & EngineIndexParam & EngineKeysParam;
 
 export interface EngineService {
-	create({ ct, index, data }: EngineServiceCreateParams): PossiblePromise<void>;
-	update({ ct, index, data }: EngineServiceUpdateParams): PossiblePromise<void>;
-	delete({ ct, index, key }: EngineServiceDeleteParams): PossiblePromise<void>;
-	createMany({ ct, index, data }: EngineServiceCreateManyParams): PossiblePromise<void>;
-	updateMany({ ct, index, data }: EngineServiceUpdateManyParams): PossiblePromise<void>;
-	deleteMany({ ct, index, keys }: EngineServiceDeleteManyParams): PossiblePromise<void>;
+  create({ ct, index, data }: EngineServiceCreateParams): PossiblePromise<void>;
+  update({ ct, index, data }: EngineServiceUpdateParams): PossiblePromise<void>;
+  delete({ ct, index, key }: EngineServiceDeleteParams): PossiblePromise<void>;
+  createMany({ ct, index, data }: EngineServiceCreateManyParams): PossiblePromise<void>;
+  updateMany({ ct, index, data }: EngineServiceUpdateManyParams): PossiblePromise<void>;
+  deleteMany({ ct, index, keys }: EngineServiceDeleteManyParams): PossiblePromise<void>;
 }
