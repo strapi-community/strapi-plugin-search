@@ -1,6 +1,6 @@
 import { Strapi } from "@strapi/strapi";
 import { getEngine, getService, isEmptyObject } from "../utils";
-import { EngineRecord, EngineRecordArray, EngineService } from "../types";
+import { EngineRecord, EngineService } from "../types";
 
 export default ({ strapi }: { strapi: Strapi }): EngineService => {
 	const engineManager = getService({ strapi, name: "engine-manager" });
@@ -40,7 +40,7 @@ export default ({ strapi }: { strapi: Strapi }): EngineService => {
 	}
 
 	async function createMany({ ct, index, data }) {
-		const structuredData = (await builder.data({ ct, index, value: data })) as EngineRecordArray;
+		const structuredData = (await builder.data({ ct, index, value: data })) as EngineRecord[];
 
 		const records = structuredData.filter((data) => !isEmptyObject(data));
 
@@ -55,7 +55,7 @@ export default ({ strapi }: { strapi: Strapi }): EngineService => {
 	}
 
 	async function updateMany({ ct, index, data }) {
-		const structuredData = (await builder.data({ ct, index, value: data })) as EngineRecordArray;
+		const structuredData = (await builder.data({ ct, index, value: data })) as EngineRecord[];
 		const records = structuredData.filter((record) => !isEmptyObject(record));
 		if (!records.length) {
 			return;

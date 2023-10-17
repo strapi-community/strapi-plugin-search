@@ -4,11 +4,11 @@ import { Field } from "./field";
 import { PossiblePromise } from "./shared";
 
 export interface DataService {
-	sanitize({ index, data }: { index: ContentTypeIndex; data: EngineData }): EngineData;
+	sanitize({ index, data }: { index: ContentTypeIndex; data: EngineData }): PossiblePromise<ProcessedField>;
 	sanitizeField({ field, data }: { field: Field; data: EngineData }): PossiblePromise<ProcessedField>;
 }
 
 export interface ProcessedField {
-	field: string;
+	field?: string;
 	value?: any;
 }
