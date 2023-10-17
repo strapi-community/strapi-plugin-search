@@ -1,4 +1,4 @@
-import * as eslintJs from "@eslint/js";
+import eslintJs from "@eslint/js";
 import { default as pluginTs } from "@typescript-eslint/eslint-plugin";
 import * as parserTs from "@typescript-eslint/parser";
 
@@ -6,7 +6,7 @@ const base = [
 	{
 		ignores: ["**/node_modules", "**/dist", "**/yarn.lock", "**/temp", "**/.idea", "**/.cache", "**/LICENSE*"],
 	},
-	...eslintJs.configs.recommended,
+	eslintJs.configs.recommended,
 	{
 		name: "strapi-plugin-search:javascript",
 		languageOptions: {

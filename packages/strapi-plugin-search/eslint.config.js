@@ -1,9 +1,9 @@
-import { base } from "@strapi-plugin-search/eslint-config";
+import * as eslint from "@strapi-plugin-search/eslint-config";
 import * as react from "eslint-plugin-react";
 import * as globals from "globals";
 
 export default [
-	...base,
+	...eslint.base,
 	{
 		ignores: ["strapi-admin.js", "strapi-server.js"],
 	},

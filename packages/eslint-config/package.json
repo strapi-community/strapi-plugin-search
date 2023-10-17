@@ -2,6 +2,7 @@
 	"name": "@strapi-plugin-search/eslint-config",
 	"private": true,
 	"version": "0.1.0",
+	"type": "module",
 	"description": "eslint config for strapi-plugin-search",
 	"main": "dist/index.js",
 	"scripts": {
