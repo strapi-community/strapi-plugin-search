@@ -13,7 +13,12 @@ export interface Index {
 	name: string;
 }
 
-export type EngineKey = string | number;
+export type EngineKey = string;
+
+export interface EngineKeyRecord {
+	field: string;
+	value: EngineKey;
+}
 
 export interface EngineKeyParam {
 	key: EngineKey;
@@ -41,11 +46,9 @@ export interface EngineDataArrayParam {
 }
 
 export interface EngineRecord {
-	key: { field: string; value: EngineKey };
+	key: EngineKeyRecord;
 	record: EngineData;
 }
-export type EngineRecordArray = EngineData[];
-
 export interface EngineCreateParams {
 	index: string;
 	record: EngineRecord;
@@ -56,7 +59,7 @@ export interface EngineUpdateParams {
 }
 export interface EngineDeleteParams {
 	index: string;
-	key: { field: string; value: EngineKey };
+	key: EngineKeyRecord;
 }
 export interface EngineCreateManyParams {
 	index: string;
@@ -68,7 +71,7 @@ export interface EngineUpdateManyParams {
 }
 export interface EngineDeleteManyParams {
 	index: string;
-	keys: Array<{ field: string; value: EngineKey }>;
+	keys: EngineKeyRecord[];
 }
 
 export abstract class Engine {
@@ -76,7 +79,7 @@ export abstract class Engine {
 	abstract getKeyField(): string;
 	abstract buildKeyValue({ value }: { value: EngineKey }): EngineKey;
 	abstract create({ index, record }: EngineCreateParams): PossiblePromise<void>;
-	abstract update({ index, record }: { index: string; record: EngineRecord }): PossiblePromise<void>;
+	abstract update({ index, record }: EngineUpdateParams): PossiblePromise<void>;
 	abstract delete({ index, key }: EngineDeleteParams): PossiblePromise<void>;
 	abstract createMany({ index, records }: EngineCreateManyParams): PossiblePromise<void>;
 	abstract updateMany({ index, records }: EngineUpdateManyParams): PossiblePromise<void>;

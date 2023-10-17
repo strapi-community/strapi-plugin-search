@@ -1,25 +1,25 @@
 import { Strapi } from "@strapi/strapi";
 import { getConfig, resolveValue } from "../utils";
-import { DataService, EngineData, Field, ProcessedField } from "../types";
+import { DataService, EngineRecord, Field, ProcessedField } from "../types";
 
 export default ({ strapi }: { strapi: Strapi }): DataService => {
 	const defaultFields = getConfig<Field[]>({ strapi, path: "global.fields" });
 
 	async function sanitize({ index, data }) {
 		const fields = index.fields || defaultFields;
-		const obj: EngineData = {};
+		let obj: any | ProcessedField = {};
 
 		if (!fields) {
-			return obj;
+			return {};
 		}
 
 		for (const field of fields) {
 			const base = await sanitizeField({ field, data });
-			if (base.value) {
+			if (base.value && base.field) {
 				obj[base.field] = base.value;
 			}
 		}
-		return obj;
+		return obj as ProcessedField;
 	}
 
 	async function sanitizeField({ field, data }) {
@@ -34,7 +34,7 @@ export default ({ strapi }: { strapi: Strapi }): DataService => {
 			return base;
 		}
 
-		base.value = data[base.field];
+		base.value = data[base.field as string];
 		if (!isComplex) {
 			return base;
 		}

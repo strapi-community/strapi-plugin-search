@@ -1,5 +1,5 @@
 import { ContentType, ContentTypeIndex } from "./content-type";
-import { EngineData, EngineKey, EngineRecord, EngineRecordArray } from "./engine";
+import { EngineData, EngineKey, EngineRecord } from "./engine";
 import { PossiblePromise } from "./shared";
 
 export interface BuilderService {
@@ -16,7 +16,7 @@ export interface BuilderService {
 		ct: ContentType;
 		index: ContentTypeIndex;
 		value: EngineData;
-	}): PossiblePromise<EngineRecord | EngineRecordArray>;
+	}): PossiblePromise<EngineRecord | EngineRecord[]>;
 	query({ ct, event }: { ct: ContentType; event: any }): Promise<DBQuery>;
 }
 

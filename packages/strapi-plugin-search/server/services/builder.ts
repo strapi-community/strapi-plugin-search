@@ -1,6 +1,6 @@
 import { Strapi } from "@strapi/strapi";
 import { getEngine, getService } from "../utils";
-import { BuilderService, DBQuery, EngineRecordArray } from "../types";
+import { BuilderService, DBQuery, EngineRecord } from "../types";
 
 export default ({ strapi }: { strapi: Strapi }): BuilderService => {
 	const engineManager = getService({ strapi, name: "engine-manager" });
@@ -20,15 +20,17 @@ export default ({ strapi }: { strapi: Strapi }): BuilderService => {
 
 	async function data({ ct, index, value }) {
 		if (Array.isArray(value)) {
-			let records: EngineRecordArray = [];
+			let records: EngineRecord[] = [];
 			for (let i = 0; i < value.length; i++) {
 				try {
-					const record = await getService({ strapi, name: "data" }).sanitize({
+					const data = await getService({ strapi, name: "data" }).sanitize({
 						index,
 						data: value[i],
 					});
+					let record: any | EngineRecord = {};
 					const recordKey = key({ ct, index, record: value[i] });
 					record[recordKey.field] = recordKey.value;
+					record.record = data;
 					records.push(record);
 				} catch (error) {
 					console.log(error);

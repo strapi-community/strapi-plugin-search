@@ -21,3 +21,5 @@ export default {
 	policies,
 	middlewares,
 };
+
+export * from "./types";
