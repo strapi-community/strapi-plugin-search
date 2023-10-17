@@ -3,7 +3,6 @@
 	"compilerOptions": {
 		"composite": true,
 		"target": "ESNext",
-		"strict": true,
 		"outDir": "dist",
 		"rootDir": "."
 	},
