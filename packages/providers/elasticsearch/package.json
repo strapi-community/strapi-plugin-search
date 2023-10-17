@@ -30,7 +30,7 @@
 		"@strapi-community/strapi-plugin-search": "0.1.0"
 	},
 	"devDependencies": {
-		"@strapi-plugin-search/tsconfig":"0.1.0",
+		"@strapi-plugin-search/tsconfig": "0.1.0",
 		"@strapi-plugin-search/eslint-config": "0.1.0"
 	}
 }

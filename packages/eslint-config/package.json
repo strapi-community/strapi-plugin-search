@@ -13,6 +13,6 @@
 		"@typescript-eslint/parser": "^6.8.0",
 		"eslint": "^8.51.0",
 		"eslint-config-prettier": "^9.0.0",
-		"@strapi-plugin-search/tsconfig":"0.1.0"
+		"@strapi-plugin-search/tsconfig": "0.1.0"
 	}
 }
