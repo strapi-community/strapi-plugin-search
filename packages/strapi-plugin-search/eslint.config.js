@@ -1,31 +1,9 @@
 import * as eslint from "@strapi-plugin-search/eslint-config";
-import * as react from "eslint-plugin-react";
-import * as globals from "globals";
 
 export default [
 	...eslint.base,
-	{
-		ignores: ["strapi-admin.js", "strapi-server.js"],
-	},
-	{
-		files: ["./admin/**/*.{ts,tsx}"],
-		plugins: {
-			react,
-		},
-		languageOptions: {
-			parserOptions: {
-				ecmaFeatures: {
-					jsx: true,
-				},
-			},
-			globals: {
-				...globals.browser,
-			},
-		},
-		settings: {
-			react: {
-				version: "detect",
-			},
-		},
-	},
+	...eslint.ts.plugin,
+	...eslint.strapi.shared,
+	...eslint.strapi.admin,
+	...eslint.strapi.server,
 ];
