@@ -1,0 +1,18 @@
+{
+	"name": "@strapi-plugin-search/eslint-config",
+	"private": true,
+	"version": "0.1.0",
+	"description": "eslint config for strapi-plugin-search",
+	"main": "dist/index.js",
+	"scripts": {
+		"build": "tsc -p tsconfig.json"
+	},
+	"license": "MIT",
+	"devDependencies": {
+		"@typescript-eslint/eslint-plugin": "^6.8.0",
+		"@typescript-eslint/parser": "^6.8.0",
+		"eslint": "^8.51.0",
+		"eslint-config-prettier": "^9.0.0",
+		"@strapi-plugin-search/tsconfig":"0.1.0"
+	}
+}

@@ -1,5 +1,5 @@
 {
-	"extends": ["../../tsconfig.json", "@strapi/typescript-utils/tsconfigs/admin"],
+	"extends": ["@strapi-plugin-search/tsconfig/base", "@strapi/typescript-utils/tsconfigs/admin"],
 	"compilerOptions": {
 		"composite": true,
 		"target": "ESNext",
@@ -7,8 +7,6 @@
 		"outDir": "dist",
 		"rootDir": "."
 	},
-
 	"include": ["package.json", "admin", "custom.d.ts"],
-
 	"exclude": ["node_modules/", "dist/", "server/", "**/*.test.ts"]
 }

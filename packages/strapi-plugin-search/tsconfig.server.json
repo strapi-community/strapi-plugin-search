@@ -1,13 +1,10 @@
 {
-	"extends": ["../../tsconfig.json", "@strapi/typescript-utils/tsconfigs/server"],
-
+	"extends": ["@strapi-plugin-search/tsconfig/base", "@strapi/typescript-utils/tsconfigs/server"],
 	"compilerOptions": {
 		"composite": true,
 		"outDir": "dist",
 		"rootDir": "."
 	},
-
 	"include": ["server", "server/**/*.json"],
-
 	"exclude": ["node_modules/", "dist/", "admin/", "**/*.test.ts"]
 }

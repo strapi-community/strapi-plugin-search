@@ -49,7 +49,9 @@
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-router-dom": "5.3.4",
-		"styled-components": "^6.0.9"
+		"styled-components": "^6.0.9",
+		"@strapi-plugin-search/tsconfig":"0.1.0",
+		"@strapi-plugin-search/eslint-config": "0.1.0"
 	},
 	"peerDependencies": {
 		"@strapi/strapi": "^4.14.4",

@@ -15,11 +15,5 @@
 		"noImplicitThis": true,
 		"skipLibCheck": true,
 		"incremental": true
-	},
-	"references": [
-		{ "path": "./packages/strapi-plugin-search" },
-		{ "path": "./packages/providers/algolia" },
-		{ "path": "./packages/providers/elasticsearch" },
-		{ "path": "./packages/providers/meilisearch" }
-	]
+	}
 }

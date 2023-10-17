@@ -1,6 +1,7 @@
 {
 	"extends": ["@strapi-plugin-search/tsconfig/base"],
 	"compilerOptions": {
+		"moduleResolution": "bundler",
 		"composite": true,
 		"outDir": "dist",
 		"rootDir": "./src"

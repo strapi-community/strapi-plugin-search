@@ -1,5 +1,5 @@
 {
-	"extends": ["../../../tsconfig.json"],
+	"extends": ["@strapi-plugin-search/tsconfig/base"],
 	"compilerOptions": {
 		"composite": true,
 		"outDir": "dist",
