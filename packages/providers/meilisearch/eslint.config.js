@@ -1,3 +1,3 @@
-import { base } from "@strapi-plugin-search/eslint-config";
+import { base, ts } from "@strapi-plugin-search/eslint-config";
 
-export default base;
+export default [...base, ...ts.plugin, ...ts.parser];

@@ -1,6 +1,4 @@
 import eslintJs from "@eslint/js";
-import { default as pluginTs } from "@typescript-eslint/eslint-plugin";
-import * as parserTs from "@typescript-eslint/parser";
 
 const base = [
 	{
@@ -8,7 +6,6 @@ const base = [
 	},
 	eslintJs.configs.recommended,
 	{
-		name: "strapi-plugin-search:javascript",
 		languageOptions: {
 			ecmaVersion: 2022,
 			parserOptions: {
@@ -17,25 +14,6 @@ const base = [
 			},
 			sourceType: "module",
 		},
-	},
-	{
-		// Install the plugins without globs, so they can be configured separately.
-		name: "strapi-plugin-search:typescript:setup",
-		plugins: {
-			ts: pluginTs as any,
-		},
-	},
-	{
-		files: ["**/*.ts"],
-		languageOptions: {
-			parser: parserTs,
-			parserOptions: {
-				sourceType: "module",
-				project: ["tsconfig.json"],
-				tsconfigRootDir: ".",
-			},
-		},
-		name: "strapi-plugin-search:typescript:rules",
 	},
 ];
 
