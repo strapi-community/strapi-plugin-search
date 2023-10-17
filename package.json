@@ -1,10 +1,11 @@
 {
-	"name": "root",
+	"name": "@strapi-plugin-search/repo",
 	"private": true,
 	"workspaces": [
 		"packages/*",
 		"packages/providers/*",
-		"packages/examples/*"
+		"examples/*",
+		"playground"
 	],
 	"scripts": {
 		"build": "lerna run build",
