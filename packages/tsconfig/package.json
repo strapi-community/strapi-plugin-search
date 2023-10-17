@@ -2,6 +2,7 @@
 	"name": "@strapi-plugin-search/tsconfig",
 	"private": true,
 	"version": "0.1.0",
+	"type": "module",
 	"description": "tsconfig files used in strapi-plugin-search",
 	"exports": {
 		"./base": "./base/tsconfig.json"
