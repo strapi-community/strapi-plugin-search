@@ -43,7 +43,7 @@ export function isEmptyObject(obj: Record<string, any>) {
 }
 
 export function getEngine({ strapi, engine }: GetEngineParams): string {
-	const defaultEngine = getConfig<string>({ strapi, path: "global.index.engine" });
+	const defaultEngine = getConfig<string>({ strapi, path: "global.engine" });
 
 	return engine || defaultEngine;
 }
