@@ -4,7 +4,7 @@ import { PossiblePromise } from "./shared";
 export interface EngineConfig {
 	name: string;
 	resolve?: string;
-	enabled?: boolean;
+	enabled: boolean;
 	options: Record<string, unknown>;
 }
 
