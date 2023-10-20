@@ -7,7 +7,6 @@ const engines = new Map();
 
 export default ({ strapi }: { strapi: Strapi }): EngineManagerService => {
 	async function register(engine) {
-		console.log(engine);
 		let enginePath = engine.resolve || `strapi-plugin-search-${engine.name}`;
 		try {
 			enginePath = path.dirname(require.resolve(enginePath));
@@ -17,10 +16,6 @@ export default ({ strapi }: { strapi: Strapi }): EngineManagerService => {
 		const EngineProvider = (await import(enginePath)).default;
 		if (!EngineProvider) {
 			throw new Error(`Engine ${engine.name} at "${enginePath}" has no export.`);
-		}
-
-		if (!(EngineProvider.prototype instanceof Engine)) {
-			throw new Error(`Engine ${engine.name} does not extend Engine`);
 		}
 
 		engines.set(engine.name, new EngineProvider({ config: engine.options }));

@@ -1,7 +1,6 @@
 {
 	"name": "@strapi-community/strapi-plugin-search",
 	"version": "0.1.0",
-	"type": "module",
 	"description": "This is the description of the plugin.",
 	"license": "MIT",
 	"scripts": {

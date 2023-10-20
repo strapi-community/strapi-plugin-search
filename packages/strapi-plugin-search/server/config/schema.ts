@@ -11,7 +11,7 @@ const ContentTypeIndex = z.object({
 	name: z.string(),
 	prefix: z.string().optional(),
 	engine: z.string().optional(),
-	fields: z.array(Field).optional(),
+	fields: z.array(z.union([z.string(), Field])).optional(),
 });
 
 const ContentType = z.object({
@@ -31,7 +31,7 @@ const plugin = z.object({
 			z.object({
 				name: z.string(),
 				resolve: z.string().optional(),
-				enabled: z.boolean().optional(),
+				enabled: z.boolean(),
 				options: z.record(z.unknown()),
 			})
 		)
