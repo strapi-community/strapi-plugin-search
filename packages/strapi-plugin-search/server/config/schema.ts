@@ -31,7 +31,7 @@ const plugin = z.object({
 			z.object({
 				name: z.string(),
 				resolve: z.string().optional(),
-				enabled: z.boolean().optional(),
+				enabled: z.boolean(),
 				options: z.record(z.unknown()),
 			})
 		)
