@@ -11,7 +11,7 @@ const ContentTypeIndex = z.object({
 	name: z.string(),
 	prefix: z.string().optional(),
 	engine: z.string().optional(),
-	fields: z.array(Field).optional(),
+	fields: z.array(z.union([z.string(), Field])).optional(),
 });
 
 const ContentType = z.object({
