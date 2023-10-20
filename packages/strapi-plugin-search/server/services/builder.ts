@@ -52,7 +52,7 @@ export default ({ strapi }: { strapi: Strapi }): BuilderService => {
 		const { action, params, state, result } = event;
 
 		// populate single level of data
-		if (action !== "afterDelete" && action !== "afterDeleteMany" && action !== "beforeUpdateMany") {
+		if (action !== "beforeUpdateMany") {
 			q.populate = await getService({ strapi, name: "populate-builder", plugin: "content-manager" })(ct.uid)
 				.populateDeep(1)
 				.build();
